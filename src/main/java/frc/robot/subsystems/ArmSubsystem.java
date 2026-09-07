@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.BooleanSupplier;
-
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
@@ -16,11 +14,8 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.FeedbackSensor;
-import com.revrobotics.spark.config.FeedForwardConfig;
-import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -35,7 +30,6 @@ public class ArmSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderArm;
   private AbsoluteEncoder m_absEncoderArm;
   private SparkClosedLoopController m_closedLoopArm;
-  private SoftLimitConfig m_SoftLimitArm;
   private double m_ArmTargetPosition = armConstants.kArmUp;
 
   public ArmSubsystem() {
@@ -48,12 +42,12 @@ public class ArmSubsystem extends SubsystemBase {
         .secondaryCurrentLimit(armConstants.kSecondaryCurrentLimit);
     m_motorConfigArm.closedLoop
         .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-        .p(0.005)
+        .p(0.01)
         .i(0)
-        .d(0.04)
+        .d(0.0)
         .outputRange(-.15, .15);
     m_motorConfigArm.closedLoop.feedForward
-      .kCos(0.13)
+      .kCos(0.15)
       .kS(0.01);
     
     //m_motorConfigArm.closedLoop.maxMotion
@@ -105,13 +99,13 @@ public class ArmSubsystem extends SubsystemBase {
     // if (m_ArmTargetPosition > armConstants.kFwdSoftLimit) {
     // m_ArmTargetPosition = armConstants.kFwdSoftLimit}
     // etc
-    m_closedLoopArm.setSetpoint(m_ArmTargetPosition, ControlType.kPosition);
+    m_closedLoopArm.setSetpoint(m_ArmTargetPosition, ControlType.kMAXMotionPositionControl);
   }
 
   private void setArmPosition(double targetPosition) {
     setRelativeEncoder();
     m_ArmTargetPosition = targetPosition;
-    m_closedLoopArm.setSetpoint(m_ArmTargetPosition, ControlType.kPosition);
+    m_closedLoopArm.setSetpoint(m_ArmTargetPosition, ControlType.kMAXMotionPositionControl);
   }
 
   public Command cmdSetArmUp() {
