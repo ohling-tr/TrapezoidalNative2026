@@ -42,18 +42,18 @@ public class ArmSubsystem extends SubsystemBase {
         .secondaryCurrentLimit(armConstants.kSecondaryCurrentLimit);
     m_motorConfigArm.closedLoop
         .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-        .p(0.01)
+        .p(0.04)
         .i(0)
-        .d(0.0)
-        .outputRange(-.15, .15);
+        .d(0.01);
+        //.outputRange(-.15, .15);
     m_motorConfigArm.closedLoop.feedForward
-      .kCos(0.15)
+      .kCos(0.13)
       .kS(0.01);
     
-    //m_motorConfigArm.closedLoop.maxMotion
-    //    .maxAcceleration(1000)
-    //    .cruiseVelocity(2000)
-    //    .allowedProfileError(1);
+    m_motorConfigArm.closedLoop.maxMotion
+        .maxAcceleration(250)
+        .cruiseVelocity(500)
+        .allowedProfileError(1);
     m_closedLoopArm = m_motorArm.getClosedLoopController();
     
     m_motorConfigArm.absoluteEncoder
