@@ -42,9 +42,9 @@ public class ArmSubsystem extends SubsystemBase {
         .secondaryCurrentLimit(armConstants.kSecondaryCurrentLimit);
     m_motorConfigArm.closedLoop
         .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-        .p(0.04)
+        .p(0.15)
         .i(0)
-        .d(0.01);
+        .d(0.0);
         //.outputRange(-.15, .15);
     m_motorConfigArm.closedLoop.feedForward
       .kCos(0.13)
