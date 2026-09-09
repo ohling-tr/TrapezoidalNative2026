@@ -30,14 +30,14 @@ public final class Constants {
   public static final class armConstants {
     public static final int motorArm = 30;
     public static final double kGearRatio = 5.0 * 3.0 * 32.0 / 18.0;
-    public static final double kEncoderDegrees = 360 / kGearRatio;
+    public static final double kEncoderDegrees = 360.0 / kGearRatio;
     public static final double kArmUp = 85; // / kEncoderDegrees; // angle is negative degrees
     public static final double kArmDown = 170; // / kEncoderDegrees;
     public static final int kCurrentLimit = 20;
     public static final double kSecondaryCurrentLimit = 30;
-    public static final double kPostionAdjust = 15  / kEncoderDegrees; // angle is in degrees 
-    public static final double kFwdSoftLimit = 180 / kEncoderDegrees;
-    public static final double kRevSoftLimit = 80 / kEncoderDegrees;
+    public static final double kPostionAdjust = 15; // / kEncoderDegrees; // angle is in degrees 
+    public static final double kFwdSoftLimit = 180; // / kEncoderDegrees;
+    public static final double kRevSoftLimit = 80; // / kEncoderDegrees;
     //public static final double kHandDownish = 105; // for absolute encoder actual degrees
 
  }
